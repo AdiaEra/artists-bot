@@ -16,14 +16,10 @@ with psycopg2.connect(user="postgres",
                                 chat_id BIGINT NOT NULL,
                                 nickname VARCHAR(30) NOT NULL,
                                 about VARCHAR(450) NOT NULL,
+                                style VARCHAR(30) NOT NULL,
+                                link_community TEXT NOT NULL,
                                 terms_partner TEXT NOT NULL,
                                 preferences TEXT NOT NULL
-                                );
-                                CREATE TABLE IF NOT EXISTS styles(
-                                user_id BIGINT REFERENCES questionnaire(user_id)
-                                ON DELETE CASCADE,
-                                style VARCHAR(30) NOT NULL,
-                                UNIQUE (user_id, style)
                                 );
                                 CREATE TABLE IF NOT EXISTS social_network(
                                 user_id BIGINT REFERENCES questionnaire(user_id)
