@@ -2,7 +2,7 @@ import psycopg2
 
 
 with psycopg2.connect(user="postgres",
-                      password="Hun$917&305TpS",
+                      password="",
                       port="5432",
                       database="artists_db") as conn:
     def create_db():
