@@ -49,7 +49,6 @@ with psycopg2.connect(user="postgres",
         """
         with conn.cursor() as cur:
             delete_query = """DROP TABLE albums;
-                DROP TABLE styles;
                 DROP TABLE social_network;
                 DROP TABLE questionnaire
                 CASCADE"""
