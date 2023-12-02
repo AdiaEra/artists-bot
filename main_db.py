@@ -156,7 +156,7 @@ def information_of_the_questionnaire(user_id: int):
 us_id = 111111111111
 # print(information_of_the_questionnaire(us_id))
 
-# link_community
+
 
 
 # def add_style(user_id: int, style: str):
