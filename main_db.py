@@ -16,7 +16,7 @@ def add_artist(user_id: int, chat_id: int, nickname: str, about: str, style: str
     :param link_community: ссылка на сообщество
     :param terms_partner: условия партнёрства
     :param preferences: предпочтительная социальная сеть и количество подписчиков
-    :return:
+    :return: 'Новый художник добавлен' или 'Художник с таким user_id уже есть в базе'
     """
     with conn.cursor() as cur:
         cur.execute("""SELECT user_id FROM questionnaire WHERE user_id = %s""", (user_id,))
