@@ -1,8 +1,7 @@
 import psycopg2
 
-
 with psycopg2.connect(user="postgres",
-                      password="",
+                      password="Hun$917&305TpS",
                       port="5432",
                       database="artists_db") as conn:
     def create_db():
@@ -13,29 +12,20 @@ with psycopg2.connect(user="postgres",
         with conn.cursor() as cur:
             create_query = """ CREATE TABLE IF NOT EXISTS questionnaire(
                                 user_id BIGINT PRIMARY KEY,
-                                chat_id BIGINT NOT NULL,
+                                chat_id INTEGER NOT NULL,
+                                user_name VARCHAR(30),
                                 nickname VARCHAR(30) NOT NULL,
                                 about VARCHAR(450) NOT NULL,
                                 style VARCHAR(30) NOT NULL,
                                 link_community TEXT NOT NULL,
-                                terms_partner TEXT NOT NULL,
-                                preferences TEXT NOT NULL
-                                );
-                                CREATE TABLE IF NOT EXISTS social_network(
-                                user_id BIGINT REFERENCES questionnaire(user_id)
-                                ON DELETE CASCADE,
-                                social_network VARCHAR(20) NOT NULL,
-                                subscribers VARCHAR(20) NOT NULL,
-                                UNIQUE (user_id, social_network)
-                                );
-                                CREATE TABLE IF NOT EXISTS albums(
-                                user_id BIGINT REFERENCES questionnaire(user_id)
-                                ON DELETE CASCADE,
-                                my_album TEXT NOT NULL,
-                                UNIQUE (user_id, my_album)
-                                )"""
+                                soc_data VARCHAR(30) NOT NULL,
+                                social_network VARCHAR(30),
+                                subscribers INTEGER NOT NULL,
+                                terms_partner TEXT,
+                                picture TEXT NOT NULL
+                                );"""
             cur.execute(create_query)
-            return 'База данных создана'
+            return 'Таблица questionnaire создана'
 
 
     # print(create_db())
@@ -48,12 +38,9 @@ with psycopg2.connect(user="postgres",
         :return: База данных удалена
         """
         with conn.cursor() as cur:
-            delete_query = """DROP TABLE albums;
-                DROP TABLE social_network;
-                DROP TABLE questionnaire
-                CASCADE"""
+            delete_query = """DROP TABLE questionnaire"""
             cur.execute(delete_query)
-            return 'База данных удалена'
+            return 'Таблица questionnaire удалена'
 
 
     # print(delete_db())
