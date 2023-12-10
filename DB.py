@@ -11,9 +11,9 @@ with psycopg2.connect(user="postgres",
         """
         with conn.cursor() as cur:
             create_query = """ CREATE TABLE IF NOT EXISTS questionnaire(
-                                user_id BIGINT PRIMARY KEY,
-                                chat_id INTEGER NOT NULL,
-                                user_name VARCHAR(30),
+                                user_name VARCHAR(30) PRIMARY KEY,
+                                user_id BIGINT NOT NULL,
+                                chat_id BIGINT NOT NULL,
                                 nickname VARCHAR(30) NOT NULL,
                                 about VARCHAR(450) NOT NULL,
                                 style VARCHAR(30) NOT NULL,
