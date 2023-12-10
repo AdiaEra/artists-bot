@@ -39,9 +39,9 @@ def add_artist(user_name: str, user_id: int, chat_id: int, nickname: str, about:
         return 'Новый художник добавлен'
 
 
-us_id = 44444444444444
+us_id = 13333333333
 user_chat_id = 4
-us_name = 'Mina'
+us_name = 'Soddda'
 user_nick = 'Marcy'
 user_about = 'крутой чел'
 us_terms_partner = 'обмен опытом'
@@ -49,7 +49,7 @@ us_link = 'rfrve557858@##'
 us_style = 'минимализм'
 user_picture = 'rertr76878733dfg'
 user_soc_network = 'instagramm'
-user_subscribers = 345
+user_subscribers = 1517
 us_soc_data = 'больше 1 года'
 # print(add_artist(us_name, us_id, user_chat_id, user_nick, user_about, us_style, us_link, us_soc_data, user_soc_network,
 #                  user_subscribers, us_terms_partner, user_picture))
@@ -217,7 +217,7 @@ def update_subscribers(subscribers: int, user_name: str):
 
 
 us_name = 'Mina'
-user_subscribers = 315
+user_subscribers = 1200
 # print(update_subscribers(user_subscribers, us_name))
 conn.commit()
 
@@ -256,3 +256,24 @@ us_name = 'Mina'
 user_picture = 'ubuuy@@@##$$gfvgh hg'
 # print(update_picture(user_picture, us_name))
 conn.commit()
+
+
+def serch(social_network: str, subscribers: int):
+    """
+    Функция поиска художников по параметрам социальной сети и количества подписчиков и вывода удовлетворяющих поиску кандидатов
+    :param social_network: социальная сеть
+    :param subscribers: количество подписчиков
+    :return: список словарей с анкетами подходящих кандидатур
+    """
+    with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+        cur.execute(
+            """SELECT user_name, nickname, style, picture, about, style, link_community, social_network, subscribers, soc_data, terms_partner FROM questionnaire WHERE social_network = %s AND subscribers BETWEEN (%s - 500) AND (%s + 500)""",
+            (social_network, subscribers, subscribers))
+        res = cur.fetchall()
+        res_list = [dict(row) for row in res]
+        return res_list
+
+
+user_soc_network = 'instagramm'
+user_subscribers = 1000
+print(serch(user_soc_network, user_subscribers))
