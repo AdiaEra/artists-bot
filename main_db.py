@@ -276,4 +276,35 @@ def serch(social_network: str, subscribers: int):
 
 user_soc_network = 'instagramm'
 user_subscribers = 1000
-print(serch(user_soc_network, user_subscribers))
+
+
+# print(serch(user_soc_network, user_subscribers))
+
+
+def search_user(user_name: str):
+    """
+    Функция, которая проверяет по user_name есть ли такой пользователь в базе
+    :param user_name: имя пользователя
+    :return: имя пользователя либо None
+    """
+    with conn.cursor() as cur:
+        cur.execute("""SELECT user_name FROM questionnaire Where user_name = %s""", (user_name,))
+        return cur.fetchone()
+
+
+us_name = 'Mina'
+
+# print(search_user(us_name))
+
+
+def list_chat_id():
+    """
+    Функция выдаёт список chat_id пользователей
+    :return: список chat_id пользователей
+    """
+    with conn.cursor() as cur:
+        cur.execute("""SELECT chat_id FROM questionnaire""")
+        list_1 = [item for i in cur.fetchall() for item in i]
+        return list_1
+
+# print(list_chat_id())
