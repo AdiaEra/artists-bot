@@ -41,7 +41,7 @@ def add_artist(user_name: str, user_id: int, chat_id: int, nickname: str, about:
 
 us_id = 13333333333
 user_chat_id = 4
-us_name = 'Soddda'
+us_name = 'Colyan'
 user_nick = 'Marcy'
 user_about = 'крутой чел'
 us_terms_partner = 'обмен опытом'
@@ -68,7 +68,7 @@ def delete_artist(user_name: str):
 
 
 us_name = 'Mina'
-# print(delete_artist(us_name))
+print(delete_artist(us_name))
 conn.commit()
 
 
@@ -308,3 +308,30 @@ def list_chat_id():
         return list_1
 
 # print(list_chat_id())
+
+
+def liked(user_name: str, liked_user: str):
+    """
+    Функция для записи пары (пользователь, выполняющий запрос-кандидат, который понравился) в таблицу user_liked
+    :param user_name: пользователь, выполняющий запрос
+    :param liked_user: кандидат, который понравился
+    :return: Кандидат добавлен или Анкета этого кандидата уже просматривалась
+    """
+    with conn.cursor() as cur:
+        cur.execute("""SELECT user_name, liked_user FROM user_liked Where user_name = %s AND liked_user = %s""",
+                    (user_name, liked_user))
+        cur.fetchone()
+        if cur.fetchone() is None:
+            try:
+                cur.execute("""
+                       INSERT INTO user_liked(user_name, liked_user)
+                       VALUES (%s, %s);""", (user_name, liked_user))
+            except UniqueViolation:
+                return 'Анкета этого кандидата уже просматривалась'
+        return 'Кандидат добавлен'
+
+
+us_name = 'Mina'
+like_user = 'Soddda'
+# print(liked(us_name, like_user))
+conn.commit()
