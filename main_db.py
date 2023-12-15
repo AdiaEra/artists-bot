@@ -41,7 +41,7 @@ def add_artist(user_name: str, user_id: int, chat_id: int, nickname: str, about:
 
 us_id = 13333333333
 user_chat_id = 4
-us_name = 'Colyan'
+us_name = 'Mina'
 user_nick = 'Marcy'
 user_about = 'крутой чел'
 us_terms_partner = 'обмен опытом'
@@ -68,7 +68,7 @@ def delete_artist(user_name: str):
 
 
 us_name = 'Mina'
-print(delete_artist(us_name))
+# print(delete_artist(us_name))
 conn.commit()
 
 
@@ -199,8 +199,8 @@ def update_social_network(social_network: str, user_name: str):
 
 
 us_name = 'Mina'
-user_soc_network = 'ВКонтакте'
-# print(update_social_network(user_soc_network, us_name))
+user_soc_network = 'VK'
+print(update_social_network(user_soc_network, us_name))
 conn.commit()
 
 
@@ -274,7 +274,7 @@ def serch(social_network: str, subscribers: int):
         return res_list
 
 
-user_soc_network = 'instagramm'
+user_soc_network = 'VK'
 user_subscribers = 1000
 
 
@@ -294,6 +294,7 @@ def search_user(user_name: str):
 
 us_name = 'Mina'
 
+
 # print(search_user(us_name))
 
 
@@ -306,6 +307,7 @@ def list_chat_id():
         cur.execute("""SELECT chat_id FROM questionnaire""")
         list_1 = [item for i in cur.fetchall() for item in i]
         return list_1
+
 
 # print(list_chat_id())
 
@@ -332,6 +334,23 @@ def liked(user_name: str, liked_user: str):
 
 
 us_name = 'Mina'
-like_user = 'Soddda'
+like_user = 'Sod'
 # print(liked(us_name, like_user))
 conn.commit()
+
+
+def delete_user_liked(user_name):
+    """
+    Функция удаления по user_name художника и кандидатов, просмотренных им
+    :param user_name: имя художника
+    :return: Запись из табицы user_liked удалена
+    """
+    with conn.cursor() as cur:
+        cur.execute("""DELETE FROM user_liked WHERE user_name = %s;""", (user_name,))
+        return 'Запись из табицы user_liked удалена'
+
+
+us_name = 'Mina'
+# print(delete_user_liked(us_name))
+conn.commit()
+
