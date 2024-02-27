@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import psycopg2.extras
 from psycopg2.errors import UniqueViolation
 
@@ -41,7 +43,7 @@ def add_artist(user_name: str, user_id: int, chat_id: int, nickname: str, about:
 
 us_id = 13333333333
 user_chat_id = 4
-us_name = 'Mina'
+us_name = 'Nina'
 user_nick = 'Marcy'
 user_about = 'крутой чел'
 us_terms_partner = 'обмен опытом'
@@ -198,9 +200,9 @@ def update_social_network(social_network: str, user_name: str):
         return 'Социальная сеть обновлена'
 
 
-us_name = 'Mina'
-user_soc_network = 'VK'
-print(update_social_network(user_soc_network, us_name))
+us_name = 'Colyan'
+user_soc_network = 'VK+Inst+TG'
+# print(update_social_network(user_soc_network, us_name))
 conn.commit()
 
 
@@ -354,3 +356,19 @@ us_name = 'Mina'
 # print(delete_user_liked(us_name))
 conn.commit()
 
+
+def serch_by_soc_net():
+    """
+    Функция поиска художников по параметрам социальной сети и количества подписчиков и вывода удовлетворяющих поиску кандидатов
+    :return: список словарей с анкетами подходящих кандидатур
+    """
+    with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+        cur.execute(f"""SELECT user_name, nickname, style, picture, about, style, link_community, social_network, subscribers, soc_data, terms_partner FROM questionnaire WHERE social_network ILIKE '%{data_order}%'""")
+        res = cur.fetchall()
+        res_list = [dict(row) for row in res]
+        return res_list
+
+
+data_order = 'Inst'
+
+# pprint(serch_by_soc_net())

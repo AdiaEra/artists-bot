@@ -1,7 +1,7 @@
 import psycopg2
 
 with psycopg2.connect(user="postgres",
-                      password="",
+                      password="Hun$917&305TpS",
                       port="5432",
                       database="artists_db") as conn:
     def create_db():
@@ -52,4 +52,18 @@ with psycopg2.connect(user="postgres",
 
 
     # print(delete_db())
+    conn.commit()
+
+
+    def add_column():
+        """
+        Функция добавляет столбец subscription_days в таблицу questionnaire
+        :return: Столбец subscription_days добавлен
+        """
+        with conn.cursor() as cur:
+            cur.execute("""ALTER TABLE questionnaire ADD COLUMN subscription_days INTEGER""")
+            return 'Столбец subscription_days добавлен'
+
+
+    # print(add_column())
     conn.commit()
